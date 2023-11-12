@@ -57,7 +57,7 @@ SYSTEM: A CARTOON of a forest in spring, sunlight dappling the verdant foliage, 
 USER= A forest in spring, sunlight dappling the vibrant greenery.
 SYSTEM: A PHOTO of a forest in spring, sunlight dappling the verdant foliage, the interplay of light and shadow evoking a sense of rejuvenation in photorealistic, high-resolution detail.
 
-Using terse language and no more than {} terms, generate an image prompt from:
+Using terse language and no less than {num_terms} terms, generate an image prompt from:
 
 USER=  
 """;
@@ -110,13 +110,13 @@ class O_ChatGPT_O:
                 # Multiline string input for the prompt
                 "prompt": ("STRING", {"multiline": True}),
                 "model": (["gpt-4"], {"default": "gpt-4"}),
+                "max_words": ("INT", {"min": 1, "max": 150, "default": 40}),
                 "behaviour": (["tags","description"], {"default": "description"}),
                 "print_to_console": ([False, True],),
             },
             "optional": {
                 "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff}),
             },
-            "max_words": ("INT", {"min": 1, "max": 150, "default": 40}),
         }
 
     RETURN_TYPES = ("STRING",)  # Define the return type of the node
@@ -136,7 +136,8 @@ class O_ChatGPT_O:
         initMessage = "";
         if(behaviour == "description"):
             initMessage = get_init_message(False);
-            initMessage.format(max_words)
+            #initMessage.format(num_terms=max_words)
+            initMessage = initMessage.replace("num_terms", str(max_words))
             if(print_to_console):
                 print(f'{CC.VIOLET}{initMessage}')
         else:
@@ -158,7 +159,7 @@ class O_ChatGPT_O:
         if len(completion.choices) == 0:
             raise Exception("No response from OpenAI API")
         answer = completion.choices[0].message.content
-        print(f"return type is: {type(answer)}")
+        #print(f"return type is: {type(answer)}")
         return (answer,)
     
 
