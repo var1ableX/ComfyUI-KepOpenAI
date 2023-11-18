@@ -57,7 +57,7 @@ SYSTEM: A CARTOON of a forest in spring, sunlight dappling the verdant foliage, 
 USER= A forest in spring, sunlight dappling the vibrant greenery.
 SYSTEM: A PHOTO of a forest in spring, sunlight dappling the verdant foliage, the interplay of light and shadow evoking a sense of rejuvenation in photorealistic, high-resolution detail.
 
-Using terse language and no less than {num_terms} terms, generate an image prompt from:
+Do not prefix your response with SYSTEM and using terse language and no less than {num_terms} terms, generate an image prompt from:
 
 USER=  
 """;
